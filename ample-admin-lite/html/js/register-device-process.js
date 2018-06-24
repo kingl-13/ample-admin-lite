@@ -1,14 +1,13 @@
 
+if (typeof web3 !== 'undefined') {
+  web3 = new Web3(web3.currentProvider);
+} else {
+  // set the provider you want from Web3.providers
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+}
 
-		if (typeof web3 !== 'undefined') {
-			web3 = new Web3(web3.currentProvider);
-		} else {
-			web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-		}
-		
-		//first account is chosen to use from test rpc
-		web3.eth.defaultAccount = web3.eth.accounts[0];
-	
+function submitTransaction() {
+
 		// paste in abi after deployment
 		// specifying contract
 		var tokenCuratedRegistryContract = web3.eth.contract([
@@ -106,18 +105,15 @@
 ]);
 
 		//getting functions of that contract
-		var tokenCuratedRegistry = tokenCuratedRegistryContract.at(0xb3da90babe7dfe8e76c6ea220acc3d9bfb125800);
+		var tokenCuratedRegistryContractInstance = tokenCuratedRegistryContract.at(0xb3da90babe7dfe8e76c6ea220acc3d9bfb125800);
 
-function checkForm() {
-document.getElementById("frm1").onsubmit = function() {
-	var data = {};
-	document.getElementBy("dId").value === data.push;
-	document.getElementBy("dName").value === data.push;
-	document.getElementBy("dManufacturer").value === data.push;
-	document.getElementBy("dSoftwareVersion").value === data.push;
+	// var data = {};
+	// document.getElementBy("dId").value === data.push;
+	// document.getElementBy("dName").value === data.push;
+	// document.getElementBy("dManufacturer").value === data.push;
+	// document.getElementBy("dSoftwareVersion").value === data.push;
+	// console.log('making transaction', data)
+	tokenCuratedRegistryContractInstance.addDevice.sendTransaction(10, "phone", "Samsung", "2.1.3");
 	
-	tokenCuratedRegistry.addDevice.sendTransaction(data.dId, data.dName, data.dManufacturer, data.dSoftwareVersion);
-		return allowsubmit;
-	}}
-window.onload=checkForm;
+};
 
